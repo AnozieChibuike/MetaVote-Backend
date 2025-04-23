@@ -385,7 +385,7 @@ def create_election():
 
         # Send the transaction
         tx_hash1 = web3.eth.send_raw_transaction(signed_tx.raw_transaction)
-        new_id = voting_contract.functions.electionCount().call()
+        new_id = voting_contract.functions.electionCount().call() + 1
         e = Election(name=election_name,blockchain_id=new_id, election_creator=creator)
         e.save()
         tx_data = voting_contract.functions.deposit(
