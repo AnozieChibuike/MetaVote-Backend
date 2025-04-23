@@ -264,13 +264,14 @@ def verify_voter():
 
 @elections_bp.route("/vote", methods=["POST"])
 def vote():
+    print("Vote endpoint called")  # Debugging
     data = request.get_json()
     gas = data.get("gas")
     election_id = data.get("electionId")
     candidates_list = data.get("candidatesList")
     registration_number = data.get("registrationNumber")
 
-    if not all([gas, election_id, candidates_list, registration_number]):
+    if not all([ election_id, candidates_list, registration_number]):
         abort(400, description="Missing required fields")
 
     print(candidates_list)  # Debugging
@@ -300,7 +301,7 @@ def vote():
         account = web3.eth.account.from_key(relayer_private_key)
 
         tx_data = voting_contract.functions.batchVote(
-            registration_number, election_id, candidates_list, gas
+            registration_number, election_id, candidates_list, 0
         ).build_transaction({
             "from": account.address
         })["data"]
@@ -388,9 +389,10 @@ def create_election():
         new_id = voting_contract.functions.electionCount().call() + 1
         e = Election(name=election_name,blockchain_id=new_id, election_creator=creator)
         e.save()
+        deposit_amount = web3.to_wei(0.001, "ether")
         tx_data = voting_contract.functions.deposit(
             new_id
-        ).build_transaction({"from": account.address, "value": 100000000,
+        ).build_transaction({"from": account.address, "value": deposit_amount,
 })["data"]
 
         tx = {
