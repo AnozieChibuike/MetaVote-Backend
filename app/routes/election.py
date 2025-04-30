@@ -360,7 +360,7 @@ def create_election():
     try:
         # Get gas price
         gas_price = web3.eth.gas_price
-        
+
 
         # Get relayer account
         account = web3.eth.account.from_key(relayer_private_key)
@@ -376,7 +376,6 @@ def create_election():
             "from": account.address,
             "nonce": web3.eth.get_transaction_count(account.address),
             "gas": web3.eth.estimate_gas({"to": contract_address, "data": tx_data, "from": account.address}),
-            "value": 100000000,
             "maxFeePerGas": web3.to_wei(2, "gwei"),  # Adjust as needed
             "maxPriorityFeePerGas": web3.to_wei(1, "gwei"),
             "chainId": web3.eth.chain_id,  # Ensure correct chain ID
@@ -390,10 +389,10 @@ def create_election():
         new_id = voting_contract.functions.electionCount().call() + 1
         e = Election(name=election_name,blockchain_id=new_id, election_creator=creator)
         e.save()
-        deposit_amount = web3.to_wei(0.001, "ether")
+
         tx_data = voting_contract.functions.deposit(
             new_id
-        ).build_transaction({"from": account.address, "value": deposit_amount,
+        ).build_transaction({"from": account.address, "value": 100000000,
 })["data"]
 
         tx = {
@@ -404,7 +403,6 @@ def create_election():
             "gas": web3.eth.estimate_gas({"to": contract_address, "data": tx_data, "from": account.address}),
             "maxFeePerGas": web3.to_wei(2, "gwei"),  # Adjust as needed
             "maxPriorityFeePerGas": web3.to_wei(1, "gwei"),
-            "value": deposit_amount,
             "chainId": web3.eth.chain_id,  # Ensure correct chain ID
         }
         signed_tx = web3.eth.account.sign_transaction(tx, relayer_private_key)
@@ -416,7 +414,7 @@ def create_election():
     except NameError as error:
         print(error)
         return jsonify({"success": False, "error": str(error)}), 500
-    
+        
 @elections_bp.route("/create-candidate", methods=["POST"])
 def create_candidate():
     data = request.get_json()
