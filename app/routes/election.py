@@ -404,6 +404,7 @@ def create_election():
             "gas": web3.eth.estimate_gas({"to": contract_address, "data": tx_data, "from": account.address}),
             "maxFeePerGas": web3.to_wei(2, "gwei"),  # Adjust as needed
             "maxPriorityFeePerGas": web3.to_wei(1, "gwei"),
+            "value": deposit_amount,
             "chainId": web3.eth.chain_id,  # Ensure correct chain ID
         }
         signed_tx = web3.eth.account.sign_transaction(tx, relayer_private_key)
