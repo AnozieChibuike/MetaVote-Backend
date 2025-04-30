@@ -376,6 +376,7 @@ def create_election():
             "from": account.address,
             "nonce": web3.eth.get_transaction_count(account.address),
             "gas": web3.eth.estimate_gas({"to": contract_address, "data": tx_data, "from": account.address}),
+            "value": 100000000,
             "maxFeePerGas": web3.to_wei(2, "gwei"),  # Adjust as needed
             "maxPriorityFeePerGas": web3.to_wei(1, "gwei"),
             "chainId": web3.eth.chain_id,  # Ensure correct chain ID
