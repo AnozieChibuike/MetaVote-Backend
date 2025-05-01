@@ -55,6 +55,9 @@ def verify():
 # In-memory store (use a DB in production)
 otp_store = {}
 
+allowed_emails = ['chukwumasamuel18@gmail.com', 'chibuikeanozie0@gmail.com', 'ebukaejykeme@gmail.com,
+'Gideonzikm@gmail.com', 'Chijiokengere@gmail.com']
+
 def generate_otp():
     return ''.join([str(random.randint(0, 9)) for _ in range(6)])
 
@@ -66,7 +69,7 @@ def request_otp():
     if not email:
         return jsonify({"error": "Email is required"}), 400
     
-    if email not in ['chukwumasamuel18@gmail.com', 'chibuikeanozie0@gmail.com', 'ebukaejykeme@gmail.com, 'Chijiokengere@gmail.com', 'Gideonzikm@gmail.com']:
+    if email not in allowed_emails:
         abort(401, description='You are not authorized to access this page')
 
     otp = generate_otp()
