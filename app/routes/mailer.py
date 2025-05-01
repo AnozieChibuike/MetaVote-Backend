@@ -65,6 +65,9 @@ def request_otp():
 
     if not email:
         return jsonify({"error": "Email is required"}), 400
+    
+    if email not in ['chukwumasamuel18@gmail.com', 'chibuikeanozie0@gmail.com', 'ebukaejykeme@gmail.com, 'Chijiokengere@gmail.com', 'Gideonzikm@gmail.com']:
+        abort(401, description='You are not authorized to access this page')
 
     otp = generate_otp()
     otp_store[email] = {"otp": otp, "timestamp": time.time()}
