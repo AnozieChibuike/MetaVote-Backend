@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, abort
 from flask_mail import Message
 from app import mail, app
 from lib.tokens import generate_token, decode_token
