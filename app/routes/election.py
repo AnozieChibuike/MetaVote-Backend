@@ -166,7 +166,10 @@ def whitelist_voter():
         voter = next((v for v in voters if v["regNo"] == registration_number), None)
 
         if not voter:
-            abort(404, description="Registration number not found in this election")
+            b = {"regNo": registration_number, "pin": "", "has_voted": False, "is_whitelisted": False}
+            election.append_voter(b)
+            # abort(404, description="Registration number not found in this election")
+
 
         # Check if already whitelisted
         # if voter.get("is_whitelisted", False):
