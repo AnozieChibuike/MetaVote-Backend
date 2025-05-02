@@ -274,8 +274,6 @@ def vote():
     if not all([ election_id, candidates_list, registration_number]):
         abort(400, description="Missing required fields")
 
-    print(candidates_list)  # Debugging
-
     # Fetch election from DB
     election = Election.query.filter_by(blockchain_id=election_id).first()
     if not election:
