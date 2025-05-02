@@ -55,7 +55,7 @@ def verify():
 # In-memory store (use a DB in production)
 otp_store = {}
 
-allowed_emails = ['chukwumasamuel18@gmail.com', 'chibuikeanozie0@gmail.com', 'ebukaejykeme@gmail.com', 'Gideonzikm@gmail.com', 'Chijiokengere@gmail.com']
+allowed_emails = ['chukwumasamuel18@gmail.com', 'chibuikeanozie0@gmail.com', 'ebukaejykeme@gmail.com', 'gideonzik@gmail.com', 'Chijiokengere@gmail.com']
 
 def generate_otp():
     return ''.join([str(random.randint(0, 9)) for _ in range(6)])
